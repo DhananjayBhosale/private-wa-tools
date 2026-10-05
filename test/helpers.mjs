@@ -7,8 +7,11 @@ const sourceRoot = resolve(process.env.PWAT_TEST_SOURCE_DIR || ".");
 export const source = (path) => readFileSync(resolve(sourceRoot, path), "utf8");
 export const settle = () => new Promise((resolve) => setImmediate(resolve));
 
-export function createStorage(stored = {}) {
-  const data = structuredClone({ settings: {}, messageCache: [], ...stored });
+// Recovery is opt-in in the product. Test pages start opted in so the recovery
+// tests exercise it; pass { optedIn: false } to get a brand-new install.
+export function createStorage(stored = {}, { optedIn = true } = {}) {
+  const settings = { ...(optedIn ? { restoreDeleted: true, recoveryOptedIn: true } : {}), ...stored.settings };
+  const data = structuredClone({ messageCache: [], ...stored, settings });
   const listeners = new Set();
   const messageListeners = [];
   const writes = [];

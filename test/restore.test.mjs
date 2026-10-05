@@ -240,12 +240,12 @@ test("known recall icons still support non-English deleted placeholders", async 
 test("toggling recovery off and on stops collection and restores the latest enabled text", async (t) => {
   const page = await createPage(t, { html: message("toggle") });
   const body = page.document.querySelector(".selectable-text");
-  await page.storage.chrome.storage.local.set({ settings: { restoreDeleted: false } });
+  await page.storage.chrome.storage.local.set({ settings: { restoreDeleted: false, recoveryOptedIn: true } });
   body.textContent = "Changed while disabled";
   await settle();
   assert.equal(page.api.state.messageCache.get("toggle"), "Original text");
   assert.equal(page.document.querySelector(".pwat-deleted-restore"), null);
-  await page.storage.chrome.storage.local.set({ settings: { restoreDeleted: true } });
+  await page.storage.chrome.storage.local.set({ settings: { restoreDeleted: true, recoveryOptedIn: true } });
   await settle();
   assert.equal(page.api.state.messageCache.get("toggle"), "Changed while disabled");
   body.textContent = "This message was deleted";

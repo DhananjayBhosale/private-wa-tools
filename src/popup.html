@@ -15,7 +15,8 @@
 
       <section>
         <label><input type="checkbox" data-setting="copyButtons"> Copy button beside messages on hover</label>
-        <label><input type="checkbox" data-setting="restoreDeleted"> Recover deleted messages inline</label>
+        <label><input type="checkbox" data-setting="restoreDeleted"> Save messages so deleted ones can be recovered (experimental, off by default)</label>
+        <p class="note">Turning this on saves the text of messages you see in WhatsApp Web in this browser, on this device only. Nothing is uploaded. Recovery does not work yet. Erase the saved text any time with the button below.</p>
         <label><input type="checkbox" data-setting="blurChatList"> Blur entire chat list (names + messages)</label>
         <label><input type="checkbox" data-setting="blurContactNames"> Blur contact names only</label>
         <label><input type="checkbox" data-setting="blurContactPhotos"> Blur contact photos</label>
@@ -40,7 +41,6 @@
 
       <footer>
         <button id="clear-cache" type="button">Clear restored message cache</button>
-        <p>Recovered text appears inside the deleted message bubble. It only works for messages this browser saw before deletion.</p>
         <p>Blocking read receipts makes WhatsApp Web act like a hidden tab, so chats you open here stay unread on this browser and on your phone until you open them on the phone. Leave it off unless you want that.</p>
       </footer>
     </main>

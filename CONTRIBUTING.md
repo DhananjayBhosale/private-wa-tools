@@ -26,7 +26,7 @@ npm test
 
 `npm test` checks syntax, the manifest, the offline rules, and runs the DOM test suite without starting a browser.
 
-`npm run test:browser` and `npm run test:extension-load` launch Chrome. They expect Chrome at the default macOS path; edit `chromePath` in the scripts for other systems.
+`npm run test:browser` and `npm run test:extension-load` launch a browser. They expect Chrome at the default macOS path; set `CHROME_PATH` for other systems. Chrome 137 and later ignores the flag that loads an unpacked extension, so `test:extension-load` needs Chrome for Testing or Chromium, and fails on regular Chrome instead of passing.
 
 To try a change, open `chrome://extensions`, turn on Developer mode, click Load unpacked, and pick this folder. After edits, click the reload arrow on the extension card and reload WhatsApp Web.
 

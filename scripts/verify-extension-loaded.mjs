@@ -1,9 +1,12 @@
 import { spawn } from "node:child_process";
-import { mkdtempSync, rmSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 
-const chromePath = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+const chromePath = process.env.CHROME_PATH || "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+const worker = JSON.parse(readFileSync("manifest.json", "utf8")).background.service_worker;
+// Chrome ships its own built-in extensions, so match this extension by its service worker.
+const isOurs = (target) => target.url?.startsWith("chrome-extension://") && target.url.endsWith(`/${worker}`);
 const extensionPath = resolve(".");
 const profileDir = mkdtempSync(`${tmpdir()}/pwat-extension-profile-`);
 const port = 9232;
@@ -25,16 +28,9 @@ try {
   const browser = await waitForBrowser();
   const cdp = await connectCdp(browser.webSocketDebuggerUrl);
   const targets = await waitForExtensionTarget(cdp);
-  const extensionTargets = targets.filter((target) => target.url?.startsWith("chrome-extension://"));
-
-  if (extensionTargets.length === 0) {
-    throw new Error("No chrome-extension target found after loading unpacked extension");
-  }
-
+  const ours = targets.find(isOurs);
   console.log("extension-load ok");
-  for (const target of extensionTargets) {
-    console.log(`${target.type} ${target.url}`);
-  }
+  console.log(`${ours.type} ${ours.url}`);
 
   await cdp.close();
 } finally {
@@ -60,12 +56,10 @@ async function waitForExtensionTarget(cdp) {
   const deadline = Date.now() + 10000;
   while (Date.now() < deadline) {
     const result = await cdp.send("Target.getTargets");
-    if (result.targetInfos.some((target) => target.url?.startsWith("chrome-extension://"))) {
-      return result.targetInfos;
-    }
+    if (result.targetInfos.some(isOurs)) return result.targetInfos;
     await delay(250);
   }
-  throw new Error("Timed out waiting for unpacked extension target");
+  throw new Error(`This extension did not load (no ${worker} target). Chrome 137 and later ignores --load-extension in branded builds; set CHROME_PATH to Chrome for Testing or Chromium.`);
 }
 
 function connectCdp(url) {

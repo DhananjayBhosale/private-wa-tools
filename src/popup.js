@@ -1,6 +1,7 @@
 const DEFAULT_SETTINGS = {
   copyButtons: true,
-  restoreDeleted: true,
+  restoreDeleted: false,
+  recoveryOptedIn: false,
   blurContactNames: false,
   blurContactPhotos: false,
   blurRecentMessages: false,
@@ -31,6 +32,7 @@ async function init() {
       settings[input.dataset.setting] = input.checked;
       if (input.dataset.setting === "localPins") settings.localPinsOptedIn = true;
       if (input.dataset.setting === "disableReadReceipts") settings.readReceiptsOptedIn = true;
+      if (input.dataset.setting === "restoreDeleted") settings.recoveryOptedIn = true;
       await chrome.storage.local.set({ settings });
     });
   });
@@ -56,5 +58,7 @@ function normalizeSettings(storedSettings = {}) {
   // Blocking read receipts stops WhatsApp marking chats as read on every linked
   // device, including the phone, so it stays off until the user turns it on.
   if (!settings.readReceiptsOptedIn) settings.disableReadReceipts = false;
+  // Saving message text needs the user's explicit opt-in, shown next to the switch.
+  if (!settings.recoveryOptedIn) settings.restoreDeleted = false;
   return settings;
 }

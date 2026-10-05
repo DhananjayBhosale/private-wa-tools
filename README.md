@@ -29,6 +29,7 @@ Chrome only allows installing outside the Chrome Web Store this way, so these th
 
 The extension is meant to show the original text of a message after the sender deletes it. **This does not work yet, and we need help to fix it.**
 
+- Recovery is off by default. Turn it on in the popup to try it or to help test.
 - Recovery passes in tests that simulate a deletion. On real WhatsApp Web, nothing appears when someone deletes a message for everyone.
 - We have not captured the real markup WhatsApp uses for a deleted message. That is the missing piece.
 
@@ -41,7 +42,7 @@ Two ways to help:
 
 - **No network calls.** The extension code has no `fetch`, `XMLHttpRequest`, WebSocket, beacon or remote script. `npm test` runs [`scripts/audit-offline.mjs`](scripts/audit-offline.mjs), which fails if one is added.
 - **Narrow access.** The only site it can touch is `https://web.whatsapp.com/*`. Other permissions: `storage` (your settings), `clipboardWrite` (the copy button) and `offscreen` (clipboard fallback).
-- **Stored on your device only**, in `chrome.storage.local`: settings, local pins and, while **Recover deleted messages inline** is on (the default), a local copy of message text seen in open chats, up to 2,000 messages. Use **Clear restored message cache** in the popup to erase it, or turn the feature off.
+- **Stored on your device only**, in `chrome.storage.local`: your settings, any chats you pin, and, only if you turn on **Save messages so deleted ones can be recovered** (off by default), a local copy of message text seen in open chats, up to 2,000 messages. Use **Clear restored message cache** in the popup to erase it.
 - WhatsApp Web still uses the internet to work. The extension adds nothing to that.
 
 Details are in [PRIVACY.md](PRIVACY.md). The source is small enough to read in an evening.

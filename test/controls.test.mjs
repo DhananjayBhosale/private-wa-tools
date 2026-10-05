@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { createPage, createStorage, settle, source } from "./helpers.mjs";
+import { createPage, createStorage, message, settle, source } from "./helpers.mjs";
 
 test("hiding one navigation button leaves its parent and other controls visible", async (t) => {
   const page = await createPage(t, {
@@ -194,4 +194,37 @@ test("the badge rule never swallows a header row that holds the search box", asy
   assert.notEqual(display("#searchbox"), "none", "the search box must survive");
   assert.equal(display('[aria-label="Ask Meta AI"]'), "none", "the Meta AI control itself is still hidden");
   assert.equal(display("#statusitem"), "none", "a rail item with a badge still collapses");
+});
+
+test("message text is not saved on a new install", async (t) => {
+  // Saving message text is data collection, so it must wait for an opt-in.
+  const storage = createStorage({}, { optedIn: false });
+  const page = await createPage(t, { storage, html: message("m1", "Private words") });
+  assert.equal(page.api.state.settings.restoreDeleted, false);
+  await page.flush();
+  assert.equal(page.api.state.messageCache.size, 0);
+  assert.deepEqual(storage.data.messageCache, []);
+});
+
+test("recovery stored as on by an older version stays off until the user opts in", async (t) => {
+  const page = await createPage(t, { storage: createStorage({ settings: { restoreDeleted: true } }, { optedIn: false }) });
+  assert.equal(page.api.state.settings.restoreDeleted, false);
+  assert.equal(page.api.normalizeSettings({ restoreDeleted: true }).restoreDeleted, false);
+  assert.equal(page.api.normalizeSettings({ restoreDeleted: true, recoveryOptedIn: true }).restoreDeleted, true);
+});
+
+test("the recovery switch shows its data disclosure and records the opt-in", async (t) => {
+  const storage = createStorage({}, { optedIn: false });
+  const popup = await createPage(t, { storage, popup: true });
+  const input = popup.document.querySelector('[data-setting="restoreDeleted"]');
+  assert.equal(input.checked, false);
+  const disclosure = input.closest("section").querySelector(".note").textContent;
+  assert.match(disclosure, /saves the text of messages/i);
+  assert.match(disclosure, /device only/i);
+  assert.match(disclosure, /nothing is uploaded/i);
+  input.checked = true;
+  input.dispatchEvent(new popup.window.Event("change"));
+  await settle();
+  assert.equal(storage.data.settings.recoveryOptedIn, true);
+  assert.equal(storage.data.settings.restoreDeleted, true);
 });

@@ -3,7 +3,7 @@ import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 
-const chromePath = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+const chromePath = process.env.CHROME_PATH || "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const profileDir = mkdtempSync(`${tmpdir()}/pwat-chrome-profile-`);
 const port = 9231;
 const fixturePort = process.env.PWAT_TEST_SERVER_PORT || "18765";

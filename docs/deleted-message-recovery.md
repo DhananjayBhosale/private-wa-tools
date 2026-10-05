@@ -24,7 +24,7 @@ Open questions the data can answer:
 
 Use a test chat. A second phone, a friend, or a small group you create for this works well.
 
-1. Install the [latest release](https://github.com/DhananjayBhosale/private-wa-tools/releases/latest). In the extension popup, make sure **Recover deleted messages inline** is on. Reload WhatsApp Web.
+1. Install the [latest release](https://github.com/DhananjayBhosale/private-wa-tools/releases/latest). In the extension popup, turn on **Save messages so deleted ones can be recovered**. It is off by default. Reload WhatsApp Web.
 2. Open the test chat in WhatsApp Web and leave it open.
 3. From the other device, send a short text message. Wait until it appears.
 4. Open the browser console on web.whatsapp.com: **Cmd+Option+J** on macOS, **Ctrl+Shift+J** on Windows and Linux.
