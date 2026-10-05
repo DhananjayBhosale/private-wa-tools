@@ -1,0 +1,26 @@
+{
+  "name": "private-wa-tools",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local-only privacy tools for WhatsApp Web.",
+  "type": "module",
+  "scripts": {
+    "test": "npm run test:check && node --test test/*.test.mjs",
+    "test:check": "node --check src/background.js && node --check src/content.js && node --check src/read-receipt-guard.js && node --check src/offscreen.js && node --check src/popup.js && node -e \"JSON.parse(require('node:fs').readFileSync('manifest.json', 'utf8'))\" && node scripts/audit-offline.mjs",
+    "test:browser": "npm run test:check && node scripts/with-test-server.mjs",
+    "test:extension-load": "node scripts/verify-extension-loaded.mjs",
+    "package": "sh scripts/package.sh"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "jsdom": "27.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DhananjayBhosale/private-wa-tools.git"
+  },
+  "homepage": "https://github.com/DhananjayBhosale/private-wa-tools",
+  "bugs": {
+    "url": "https://github.com/DhananjayBhosale/private-wa-tools/issues"
+  }
+}

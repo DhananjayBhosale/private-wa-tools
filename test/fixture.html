@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Private WA Tools Fixture</title>
+    <link rel="stylesheet" href="../src/content.css">
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 24px; }
+      [role="grid"] { display: flex; flex-direction: column; gap: 8px; width: 360px; }
+      [role="grid"] [role="row"] { align-items: center; border: 1px solid #ddd; display: flex; gap: 10px; min-height: 52px; padding: 8px 12px; }
+      #main { width: 640px; }
+      .fixture-row { align-items: center; box-sizing: border-box; display: flex; gap: 8px; margin: 12px 0; padding: 0 60px; width: 640px; }
+      .message-in { justify-content: flex-start; }
+      .message-out { justify-content: flex-end; }
+      .fixture-bubble { background: #e7f7d4; border-radius: 8px; max-width: 360px; padding: 10px; }
+      .fixture-modern-row { box-sizing: border-box; display: flex; padding: 0 60px; width: 640px; }
+      .fixture-modern-message { display: flex; width: 100%; }
+      .fixture-modern-sent { justify-content: flex-end; }
+      .fixture-modern-received { justify-content: flex-start; }
+      .fixture-wa-action-cluster { display: inline-flex; gap: 4px; }
+      .fixture-wa-action { border-radius: 50%; height: 30px; width: 30px; }
+      [role="grid"] img { background: #ddd; border-radius: 50%; height: 32px; width: 32px; }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <button aria-label="Status">Status</button>
+      <button title="Updates">Updates</button>
+      <button aria-label="Channels">Channels</button>
+      <button title="Communities">Communities</button>
+      <button aria-label="Meta AI">Meta AI</button>
+    </nav>
+
+    <div aria-label="Media tray">
+      <button aria-label="Emoji">Emoji</button>
+      <button aria-label="GIF">GIF</button>
+      <button aria-label="Sticker">Sticker</button>
+    </div>
+
+    <section aria-label="Chat list" role="grid">
+      <div role="row" data-testid="cell-frame-container">
+        <img alt="">
+        <span title="Asha">Asha</span>
+        <span dir="ltr">Lunch at 1?</span>
+        <button type="button" aria-label="Pin">Pin</button>
+      </div>
+      <div role="row" data-testid="cell-frame-container">
+        <img alt="">
+        <span title="Dev Group">Dev Group</span>
+        <span dir="ltr">Deploy is green</span>
+        <button type="button" aria-label="Pin">Pin</button>
+      </div>
+    </section>
+
+    <div id="main">
+      <div data-id="true_1@c.us_MSG1" class="message-out fixture-row" tabindex="-1">
+        <span class="fixture-wa-action-cluster">
+          <button class="fixture-wa-action fixture-wa-action-out" type="button" aria-label="React">React</button>
+        </span>
+        <div class="fixture-bubble">
+          <span data-icon="tail-out">tail-out</span>
+          <span class="selectable-text">Hello from fixture <img class="emoji" alt="🙂"></span>
+          <span data-testid="msg-meta">12:00</span>
+        </div>
+      </div>
+      <div data-id="false_1@c.us_MSG2" class="message-in fixture-row" tabindex="-1">
+        <div class="fixture-bubble">
+          <span class="selectable-text">Secret before deletion</span>
+        </div>
+        <span class="fixture-wa-action-cluster">
+          <button class="fixture-wa-action fixture-wa-forward-in" type="button" aria-label="Forward">Forward</button>
+          <button class="fixture-wa-action fixture-wa-action-in" type="button" aria-label="React">React</button>
+        </span>
+      </div>
+      <div data-id="false_1@c.us_MSG3" class="message-in fixture-row" tabindex="-1">
+        <div class="fixture-bubble">
+          <img alt="">
+          <div>Photo caption</div>
+        </div>
+      </div>
+      <div data-id="false_1@c.us_MSG4" class="message-in fixture-row" tabindex="-1">
+        <div class="fixture-bubble">
+          <span data-icon="ic-mood">ic-mood</span>
+          <span data-testid="msg-meta">12:01</span>
+        </div>
+      </div>
+      <div role="row" class="fixture-modern-row">
+        <div data-id="3EB0MODERNSENT" class="fixture-modern-message fixture-modern-sent">
+          <div class="fixture-bubble">
+            <span class="selectable-text">Modern sent bubble</span>
+          </div>
+        </div>
+      </div>
+      <div role="row" class="fixture-modern-row">
+        <div data-id="3EB0MODERNRECV" class="fixture-modern-message fixture-modern-received">
+          <div class="fixture-bubble">
+            <span class="selectable-text">Modern received bubble</span>
+          </div>
+        </div>
+      </div>
+      <div role="row" class="fixture-modern-row">
+        <div data-id="3EB0RECALLED" class="fixture-modern-message fixture-modern-received">
+          <div class="fixture-bubble">
+            <span class="x1rg5ohu">Cached before the recall</span>
+          </div>
+        </div>
+      </div>
+      <div role="row" class="fixture-modern-row">
+        <div data-id="3EB0UNSEEN" class="fixture-modern-message fixture-modern-received">
+          <div class="fixture-bubble">
+            <span class="x1rg5ohu">Never cached</span>
+          </div>
+        </div>
+      </div>
+      <div data-id="false_1@c.us_MSG5" class="message-in fixture-row" tabindex="-1">
+        <div class="fixture-bubble">
+          <span class="selectable-text">Collapsed intro...</span>
+          <button type="button" class="fixture-read-more">Read more</button>
+        </div>
+        <span class="fixture-wa-action-cluster">
+          <button class="fixture-wa-action fixture-wa-action-long" type="button" aria-label="React">React</button>
+        </span>
+      </div>
+    </div>
+
+    <pre id="test-results"></pre>
+
+    <script>
+      window.__PWAT_DISABLE_AUTO_INIT__ = true;
+
+      const storage = {
+        settings: {
+          copyButtons: true,
+          restoreDeleted: true,
+          blurContactNames: true,
+          blurContactPhotos: true,
+          blurRecentMessages: true,
+          blurMessages: true,
+          hideStatus: true,
+          hideChannels: true,
+          hideCommunities: true,
+          hideMetaAi: true,
+          hideEmojis: true,
+          hideGifs: true,
+          hideStickers: true,
+          disableReadReceipts: true,
+          readReceiptsOptedIn: true,
+          localPinsOptedIn: true,
+          localPins: true
+        },
+        pinnedChats: [],
+        messageCache: []
+      };
+
+      const storageListeners = new Set();
+      const messageListeners = [];
+      window.chrome = {
+        runtime: {
+          onInstalled: { addListener() {} },
+          onMessage: { addListener(listener) { messageListeners.push(listener); } },
+          sendMessage(message) {
+            return new Promise((resolve, reject) => {
+              for (const listener of messageListeners) {
+                if (listener(message, {}, resolve) === true) return;
+              }
+              reject(new Error(`No handler for ${message.type}`));
+            });
+          }
+        },
+        storage: {
+          local: {
+            async get(keys) {
+              const out = {};
+              for (const key of keys) out[key] = storage[key];
+              return out;
+            },
+            async set(values) {
+              const changes = {};
+              for (const [key, value] of Object.entries(values)) {
+                if (JSON.stringify(storage[key]) !== JSON.stringify(value)) {
+                  changes[key] = { oldValue: storage[key], newValue: value };
+                }
+              }
+              Object.assign(storage, values);
+              if (Object.keys(changes).length) {
+                queueMicrotask(() => storageListeners.forEach((listener) => listener(changes, "local")));
+              }
+            }
+          },
+          onChanged: {
+            addListener(listener) { storageListeners.add(listener); },
+            removeListener(listener) { storageListeners.delete(listener); }
+          }
+        }
+      };
+
+      Object.defineProperty(navigator, "clipboard", {
+        configurable: true,
+        value: {
+          value: "",
+          async writeText(text) {
+            this.value = text;
+          }
+        }
+      });
+    </script>
+    <script type="module" src="../src/background.js"></script>
+    <script src="../src/read-receipt-guard.js"></script>
+    <script src="../src/content.js"></script>
+    <script>
+      const results = [];
+
+      document.querySelector(".fixture-read-more").addEventListener("click", () => {
+        document.querySelector('[data-id="false_1@c.us_MSG5"] .selectable-text').textContent = "Collapsed intro with the complete expanded message body";
+        document.querySelector(".fixture-read-more").remove();
+      });
+
+      function assert(name, condition) {
+        results.push({ name, passed: Boolean(condition) });
+      }
+
+      function $(id) {
+        return document.querySelector(`[data-id="${id}"]`);
+      }
+
+      function copyButton() {
+        return document.querySelector(".pwat-copy-button");
+      }
+
+      function isVisible(element) {
+        return Boolean(element) && element.classList.contains("pwat-copy-button-visible") && getComputedStyle(element).opacity === "1";
+      }
+
+      async function hover(element) {
+        element.dispatchEvent(new PointerEvent("pointerover", { bubbles: true }));
+        // Let the show/hide opacity transition finish before measuring.
+        await wait(180);
+      }
+
+      function wait(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+
+      function overlaps(a, b) {
+        return a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+      }
+
+      async function runFixtureTests() {
+        await window.__PrivateWATools.init();
+        await wait(300);
+
+        assert("settings classes applied", document.body.classList.contains("pwat-hide-status") && document.body.classList.contains("pwat-blur-messages"));
+
+        // Received message: button sits to the LEFT of the bubble, away from
+        // WhatsApp's own hover controls on the right.
+        await hover($("false_1@c.us_MSG2").querySelector(".selectable-text"));
+        assert("copy button appears on hover", isVisible(copyButton()));
+        const inBubble = $("false_1@c.us_MSG2").querySelector(".fixture-bubble").getBoundingClientRect();
+        const inCopy = copyButton().getBoundingClientRect();
+        assert("copy button sits left of received bubble", inCopy.right <= inBubble.left);
+        assert("copy button is vertically centred on the bubble", Math.abs(inCopy.top + inCopy.height / 2 - (inBubble.top + inBubble.height / 2)) <= 2);
+        const nativeControls = [...$("false_1@c.us_MSG2").querySelectorAll("button")].map((button) => button.getBoundingClientRect());
+        assert("copy button does not overlap WhatsApp controls", nativeControls.every((rect) => !overlaps(inCopy, rect)));
+
+        // Sent message: button flips to the right of the bubble.
+        await hover($("true_1@c.us_MSG1").querySelector(".selectable-text"));
+        const outBubble = $("true_1@c.us_MSG1").querySelector(".fixture-bubble").getBoundingClientRect();
+        const outCopy = copyButton().getBoundingClientRect();
+        assert("copy button sits right of sent bubble", outCopy.left >= outBubble.right);
+        const outControls = [...$("true_1@c.us_MSG1").querySelectorAll("button")].map((button) => button.getBoundingClientRect());
+        assert("copy button clears sent-message controls", outControls.every((rect) => !overlaps(outCopy, rect)));
+
+        // Newer WhatsApp builds ship no message-in/message-out classes and a bare
+        // data-id, so direction has to come from the bubble's position in its row.
+        await hover($("3EB0MODERNSENT").querySelector(".selectable-text"));
+        const modernSentBubble = $("3EB0MODERNSENT").querySelector(".fixture-bubble").getBoundingClientRect();
+        const modernSentCopy = copyButton().getBoundingClientRect();
+        assert("classless sent bubble is detected as sent", modernSentCopy.left >= modernSentBubble.right);
+
+        await hover($("3EB0MODERNRECV").querySelector(".selectable-text"));
+        const modernRecvBubble = $("3EB0MODERNRECV").querySelector(".fixture-bubble").getBoundingClientRect();
+        const modernRecvCopy = copyButton().getBoundingClientRect();
+        assert("classless received bubble is detected as received", modernRecvCopy.right <= modernRecvBubble.left);
+
+        assert("only one copy button exists", document.querySelectorAll(".pwat-copy-button").length === 1);
+        window.__PrivateWATools.scanDocument();
+        window.__PrivateWATools.scanDocument();
+        assert("rescan does not duplicate the copy button", document.querySelectorAll(".pwat-copy-button").length === 1);
+
+        // Copy content.
+        await hover($("true_1@c.us_MSG1").querySelector(".selectable-text"));
+        copyButton().click();
+        await wait(30);
+        assert("copy excludes metadata and keeps emoji", navigator.clipboard.value === "Hello from fixture 🙂");
+
+        await hover($("false_1@c.us_MSG5").querySelector(".selectable-text"));
+        copyButton().click();
+        await wait(500);
+        assert("copy expands read more first", navigator.clipboard.value === "Collapsed intro with the complete expanded message body");
+
+        await hover($("false_1@c.us_MSG3").querySelector("div"));
+        assert("media caption still gets a copy button", isVisible(copyButton()));
+
+        await hover($("false_1@c.us_MSG4").querySelector(".fixture-bubble"));
+        assert("icon-only message gets no copy button", !isVisible(copyButton()));
+        assert("icon-only message has no copyable text", window.__PrivateWATools.extractMessageText($("false_1@c.us_MSG4")) === "");
+
+        // Leaving the message list hides the button.
+        await hover(document.querySelector("nav"));
+        await wait(250);
+        assert("copy button hides when pointer leaves messages", !isVisible(copyButton()));
+
+        // Chat list rows never get a copy button.
+        await hover(document.querySelector('[aria-label="Chat list"] span[title]'));
+        await wait(250);
+        assert("chat list rows get no copy button", !isVisible(copyButton()));
+
+        // Keyboard focus on a message row also reveals the button.
+        $("true_1@c.us_MSG1").focus();
+        await wait(200);
+        assert("focusing a message reveals the copy button", isVisible(copyButton()));
+        $("true_1@c.us_MSG1").blur();
+
+        // Clipboard fallback.
+        const originalWriteText = navigator.clipboard.writeText;
+        const originalExecCommand = document.execCommand;
+        let fallbackCopy = "";
+        navigator.clipboard.writeText = async () => {
+          throw new Error("async clipboard unavailable");
+        };
+        document.execCommand = (command) => {
+          fallbackCopy = document.activeElement?.value || "";
+          return command === "copy";
+        };
+        await window.__PrivateWATools.copyTextToClipboard("Fallback copy");
+        assert("copy falls back when async clipboard fails", fallbackCopy === "Fallback copy");
+        navigator.clipboard.writeText = originalWriteText;
+        document.execCommand = originalExecCommand;
+
+        // Deleted message recovery.
+        $("false_1@c.us_MSG2").querySelector(".selectable-text").textContent = "This message was deleted";
+        window.__PrivateWATools.scanDocument();
+        const restored = $("false_1@c.us_MSG2").querySelector(".pwat-deleted-restore");
+        assert("deleted message is detected", window.__PrivateWATools.isDeletedMessage($("false_1@c.us_MSG2")));
+        assert("deleted message shows recovered text inline", restored?.textContent.includes("Secret before deletion"));
+        assert("recovered text is labelled", restored?.querySelector(".pwat-deleted-label")?.textContent === "Recovered locally");
+        window.__PrivateWATools.scanDocument();
+        assert("recovered text is not duplicated", $("false_1@c.us_MSG2").querySelectorAll(".pwat-deleted-restore").length === 1);
+        await hover($("false_1@c.us_MSG2").querySelector(".fixture-bubble"));
+        assert("deleted message keeps a copy button", isVisible(copyButton()));
+        copyButton().click();
+        await wait(30);
+        assert("copying a deleted message copies the recovered text", navigator.clipboard.value === "Secret before deletion");
+
+        // Deleted message without a cached copy gets the note, not a recovery block.
+        window.__PrivateWATools.state.messageCache.delete("false_1@c.us_MSG3");
+        $("false_1@c.us_MSG3").querySelector("div").textContent = "This message was deleted";
+        window.__PrivateWATools.scanDocument();
+        assert("uncached deleted message shows no recovery block", $("false_1@c.us_MSG3").querySelector(".pwat-deleted-restore") === null);
+        assert("uncached deleted message shows the missing-copy note", $("false_1@c.us_MSG3").querySelector(".pwat-deleted-empty") !== null);
+
+        // Real recalls render the placeholder as a plain span: no .selectable-text
+        // class, no dir attribute, no [data-icon] in some builds.
+        const recalled = $("3EB0RECALLED");
+        assert("plain-span message is cached", window.__PrivateWATools.state.messageCache.get("3EB0RECALLED") === "Cached before the recall");
+        recalled.querySelector("span").textContent = "This message was deleted";
+        assert("recall in a plain span is detected", window.__PrivateWATools.isDeletedMessage(recalled));
+        window.__PrivateWATools.scanDocument();
+        assert("plain-span recall shows recovered text", recalled.querySelector(".pwat-deleted-text")?.textContent === "Cached before the recall");
+        assert("recovered recall has no missing-copy note", recalled.querySelector(".pwat-deleted-empty") === null);
+
+        // A recall detected by icon alone, with no cached copy, must say so.
+        const unseen = $("3EB0UNSEEN");
+        window.__PrivateWATools.state.messageCache.delete("3EB0UNSEEN");
+        unseen.querySelector(".fixture-bubble").innerHTML = '<span data-icon="recalled"></span><span class="x1rg5ohu">This message was deleted</span>';
+        assert("recall marked only by icon is detected", window.__PrivateWATools.isDeletedMessage(unseen));
+        window.__PrivateWATools.scanDocument();
+        assert("uncached recall shows the missing-copy note", unseen.querySelector(".pwat-deleted-empty")?.textContent === "No saved copy");
+        assert("uncached recall shows no recovered text", unseen.querySelector(".pwat-deleted-text") === null);
+
+        // A normal message that merely mentions the phrase is not a deletion.
+        const decoy = document.createElement("div");
+        decoy.setAttribute("data-id", "3EB0DECOY");
+        decoy.className = "fixture-modern-message fixture-modern-received";
+        decoy.innerHTML = '<div class="fixture-bubble"><span class="selectable-text">Earlier today someone told me that this message was deleted by mistake, so please resend the attachment when you get a chance.</span></div>';
+        const decoyRow = document.createElement("div");
+        decoyRow.setAttribute("role", "row");
+        decoyRow.className = "fixture-modern-row";
+        decoyRow.appendChild(decoy);
+        document.getElementById("main").appendChild(decoyRow);
+        assert("long message mentioning deletion is not treated as deleted", !window.__PrivateWATools.isDeletedMessage(decoy));
+        window.__PrivateWATools.scanDocument();
+        assert("decoy message gets no recovery block", decoy.querySelector(".pwat-deleted-restore") === null);
+
+        // A message that arrives and is deleted before any timer fires must still
+        // be recoverable: the MutationObserver caches it synchronously.
+        const fresh = document.createElement("div");
+        fresh.setAttribute("data-id", "3EB0FRESH");
+        fresh.className = "fixture-modern-message fixture-modern-received";
+        fresh.innerHTML = '<div class="fixture-bubble"><span class="selectable-text">Arrived then deleted fast</span></div>';
+        const freshRow = document.createElement("div");
+        freshRow.setAttribute("role", "row");
+        freshRow.className = "fixture-modern-row";
+        freshRow.appendChild(fresh);
+        document.getElementById("main").appendChild(freshRow);
+        await wait(0);
+        assert("new message is cached without waiting for a timer", window.__PrivateWATools.state.messageCache.get("3EB0FRESH") === "Arrived then deleted fast");
+        fresh.querySelector(".selectable-text").textContent = "This message was deleted";
+        window.__PrivateWATools.scanDocument();
+        assert("message deleted right after arrival is still recovered", fresh.querySelector(".pwat-deleted-text")?.textContent === "Arrived then deleted fast");
+
+        assert("message cache is persisted with stable ids", storage.messageCache.some((entry) => entry.id === "false_1@c.us_MSG2" && entry.text === "Secret before deletion"));
+
+        // Local pins.
+        assert("local pins do not inject separate pin buttons", document.querySelector(".pwat-pin-button") === null);
+        document.querySelector('[role="row"] button[aria-label="Pin"]').click();
+        await wait(0);
+        assert("local pin persisted", storage.pinnedChats.includes("Asha"));
+        assert("local pin class applied", document.querySelector('[role="row"]').classList.contains("pwat-pinned"));
+        assert("local pin row is ordered first", document.querySelector('[role="row"]').style.order === "-1000");
+
+        window.__PrivateWATools.state.settings.localPins = false;
+        window.__PrivateWATools.scanDocument();
+        assert("local pins cleanup restores chat rows", document.querySelectorAll(".pwat-pin-button, .pwat-chat-row-host, .pwat-pinned").length === 0);
+
+        assert("old local pin settings are normalized off", window.__PrivateWATools.normalizeSettings({ localPins: true }).localPins === false);
+        assert("explicit local pin opt-in is preserved", window.__PrivateWATools.normalizeSettings({ localPinsOptedIn: true, localPins: true }).localPins === true);
+
+        // Privacy toggles.
+        assert("extra WhatsApp button hide classes applied", document.body.classList.contains("pwat-hide-channels") && document.body.classList.contains("pwat-hide-communities") && document.body.classList.contains("pwat-hide-meta-ai") && document.body.classList.contains("pwat-hide-emojis") && document.body.classList.contains("pwat-hide-gifs") && document.body.classList.contains("pwat-hide-stickers"));
+        window.__PrivateWATools.state.settings.blurMessages = false;
+        window.__PrivateWATools.scanDocument();
+        document.body.classList.remove("pwat-blur-messages");
+        assert("blur contact names does not blur chat messages", getComputedStyle($("true_1@c.us_MSG1").querySelector(".selectable-text")).filter === "none");
+        assert("read receipt guard enabled when read receipts are blocked", localStorage.getItem("pwatReadReceiptGuardOptIn") === "true" && window.__PWAT_READ_RECEIPT_GUARD__?.enabled === true);
+        assert("no extension network APIs used", !String(window.__PrivateWATools.scanDocument).includes("fetch("));
+
+        const passed = results.every((result) => result.passed);
+        document.body.dataset.tests = passed ? "passed" : "failed";
+        document.getElementById("test-results").textContent = JSON.stringify({ passed, results }, null, 2);
+      }
+
+      runFixtureTests().catch((error) => {
+        results.push({ name: `fixture crashed: ${error.message}`, passed: false });
+        document.body.dataset.tests = "failed";
+        document.getElementById("test-results").textContent = JSON.stringify({ passed: false, results }, null, 2);
+      });
+    </script>
+  </body>
+</html>

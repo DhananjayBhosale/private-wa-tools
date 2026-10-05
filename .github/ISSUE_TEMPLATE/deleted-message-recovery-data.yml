@@ -1,0 +1,84 @@
+name: Deleted message recovery data
+description: Share redacted before and after snapshots from a real deletion
+title: "Recovery data: "
+labels: ["deleted-message-recovery"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Recovery does not work on real WhatsApp Web yet. The real markup of a deleted message is the missing piece.
+        Follow the steps in [docs/deleted-message-recovery.md](https://github.com/DhananjayBhosale/private-wa-tools/blob/main/docs/deleted-message-recovery.md) and use a test chat.
+        The snapshot removes message text, names, numbers, links and ids. Read the output before you post it.
+  - type: textarea
+    id: before
+    attributes:
+      label: Snapshot before the deletion
+      description: Output of the snapshot, run while the message is visible.
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: after
+    attributes:
+      label: Snapshot after the deletion
+      description: Output of the snapshot, run after the message was deleted for everyone.
+      render: json
+    validations:
+      required: true
+  - type: dropdown
+    id: who
+    attributes:
+      label: Who deleted the message
+      options:
+        - The other person deleted it for everyone
+        - I deleted it for everyone
+    validations:
+      required: true
+  - type: dropdown
+    id: chat
+    attributes:
+      label: Chat type
+      options:
+        - One-to-one chat
+        - Group chat
+    validations:
+      required: true
+  - type: dropdown
+    id: open
+    attributes:
+      label: Was the chat open in WhatsApp Web when the message arrived
+      options:
+        - "Yes"
+        - "No"
+        - Not sure
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Extension version
+      description: Shown on the extension card at chrome://extensions.
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and operating system
+      placeholder: Chrome 140 on macOS 26
+    validations:
+      required: true
+  - type: textarea
+    id: seen
+    attributes:
+      label: What you saw on screen
+      description: For example, what the deleted bubble showed and whether any recovered text or note appeared.
+    validations:
+      required: true
+  - type: checkboxes
+    id: redaction
+    attributes:
+      label: Privacy check
+      options:
+        - label: I read the snapshots and nothing in them or in this issue is personal.
+          required: true

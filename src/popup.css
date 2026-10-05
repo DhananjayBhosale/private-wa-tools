@@ -1,0 +1,88 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #f7f8fa;
+  color: #111b21;
+  font: 14px/1.4 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin: 0;
+  width: 320px;
+}
+
+main {
+  padding: 16px;
+}
+
+header {
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+}
+
+h1 {
+  font-size: 18px;
+  line-height: 1.2;
+  margin: 0 0 4px;
+}
+
+p {
+  color: #667781;
+  font-size: 12px;
+  margin: 0;
+}
+
+section {
+  display: grid;
+  gap: 10px;
+}
+
+section + section {
+  border-top: 1px solid #e5e7eb;
+  margin-top: 14px;
+  padding-top: 12px;
+}
+
+h2 {
+  font-size: 13px;
+  margin: 0;
+}
+
+.setting-grid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr 1fr;
+}
+
+label {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
+input {
+  accent-color: #00a884;
+}
+
+footer {
+  border-top: 1px solid #e5e7eb;
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 12px;
+}
+
+button {
+  background: #111b21;
+  border: 0;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font: 700 13px/1 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height: 34px;
+  padding: 0 12px;
+}
+
+button:hover {
+  background: #263238;
+}

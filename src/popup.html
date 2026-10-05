@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Private WA Tools</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Private WA Tools</h1>
+        <p>Local-only WhatsApp Web controls.</p>
+      </header>
+
+      <section>
+        <label><input type="checkbox" data-setting="copyButtons"> Copy button beside messages on hover</label>
+        <label><input type="checkbox" data-setting="restoreDeleted"> Recover deleted messages inline</label>
+        <label><input type="checkbox" data-setting="blurChatList"> Blur entire chat list (names + messages)</label>
+        <label><input type="checkbox" data-setting="blurContactNames"> Blur contact names only</label>
+        <label><input type="checkbox" data-setting="blurContactPhotos"> Blur contact photos</label>
+        <label><input type="checkbox" data-setting="blurRecentMessages"> Blur recent messages preview</label>
+        <label><input type="checkbox" data-setting="blurMessages"> Blur open chat messages</label>
+        <label><input type="checkbox" data-setting="disableReadReceipts"> Block read receipts (off by default: keeps chats unread everywhere, phone included)</label>
+        <label><input type="checkbox" data-setting="localPins"> Pin chats locally from WhatsApp menu</label>
+      </section>
+
+      <section>
+        <h2>Hide WhatsApp buttons</h2>
+        <div class="setting-grid">
+          <label><input type="checkbox" data-setting="hideStatus"> Status</label>
+          <label><input type="checkbox" data-setting="hideChannels"> Channels</label>
+          <label><input type="checkbox" data-setting="hideCommunities"> Communities</label>
+          <label><input type="checkbox" data-setting="hideMetaAi"> Meta AI</label>
+          <label><input type="checkbox" data-setting="hideEmojis"> Emojis</label>
+          <label><input type="checkbox" data-setting="hideGifs"> GIFs</label>
+          <label><input type="checkbox" data-setting="hideStickers"> Stickers</label>
+        </div>
+      </section>
+
+      <footer>
+        <button id="clear-cache" type="button">Clear restored message cache</button>
+        <p>Recovered text appears inside the deleted message bubble. It only works for messages this browser saw before deletion.</p>
+        <p>Blocking read receipts makes WhatsApp Web act like a hidden tab, so chats you open here stay unread on this browser and on your phone until you open them on the phone. Leave it off unless you want that.</p>
+      </footer>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>

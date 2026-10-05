@@ -1,0 +1,232 @@
+/* The copy button is a single body-level overlay positioned next to the hovered
+   message, so WhatsApp's React re-renders can never detach or hide it. */
+.pwat-copy-button {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid rgba(17, 27, 33, 0.12);
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(11, 20, 26, 0.18);
+  color: #54656f;
+  cursor: pointer;
+  display: inline-flex;
+  height: 30px;
+  justify-content: center;
+  left: -1000px;
+  margin: 0;
+  opacity: 0;
+  padding: 0;
+  pointer-events: none;
+  position: fixed;
+  top: -1000px;
+  transition: opacity 120ms ease;
+  visibility: hidden;
+  width: 30px;
+  z-index: 2147483646;
+}
+
+.pwat-copy-button-visible {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.pwat-copy-button:hover,
+.pwat-copy-button:focus-visible {
+  background: #f0f2f5;
+  color: #111b21;
+  outline: none;
+}
+
+.pwat-copy-button svg {
+  display: block;
+  fill: currentColor;
+  height: 16px;
+  width: 16px;
+}
+
+.pwat-copy-button-copied {
+  color: #008069 !important;
+}
+
+.pwat-copy-button-failed {
+  color: #d93025 !important;
+}
+
+body.dark .pwat-copy-button,
+html.dark .pwat-copy-button {
+  background: #233138;
+  border-color: rgba(233, 237, 239, 0.14);
+  color: #aebac1;
+}
+
+body.dark .pwat-copy-button:hover,
+html.dark .pwat-copy-button:hover {
+  background: #2a3942;
+  color: #e9edef;
+}
+
+.pwat-deleted-restore {
+  border-left: 3px solid #d93025;
+  display: block;
+  margin: 4px 0 2px;
+  padding-left: 8px;
+}
+
+.pwat-deleted-label {
+  color: #d93025;
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.pwat-deleted-empty {
+  color: #8696a0;
+  display: block;
+  font-size: 11px;
+  font-style: italic;
+  margin-top: 2px;
+}
+
+.pwat-deleted-text {
+  display: block;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+body.pwat-blur-contact-names [aria-label="Chat list"] span[title] {
+  filter: blur(5px);
+  transition: filter 120ms ease;
+}
+
+body.pwat-blur-contact-names [aria-label="Chat list"] [role="row"]:hover span[title] {
+  filter: none;
+}
+
+body.pwat-blur-recent-messages [aria-label="Chat list"] [role="row"] [dir="ltr"]:not([title]) {
+  filter: blur(5px);
+  transition: filter 120ms ease;
+}
+
+body.pwat-blur-recent-messages [aria-label="Chat list"] [role="row"]:hover [dir="ltr"]:not([title]) {
+  filter: none;
+}
+
+body.pwat-blur-contact-photos [aria-label="Chat list"] [role="row"] img {
+  filter: blur(7px);
+  transition: filter 120ms ease;
+}
+
+body.pwat-blur-contact-photos [aria-label="Chat list"] [role="row"]:hover img {
+  filter: none;
+}
+
+body.pwat-blur-messages [data-id] span.selectable-text,
+body.pwat-blur-messages [data-id] .selectable-text,
+body.pwat-blur-messages [data-id] span[dir],
+body.pwat-blur-messages [data-id] div[dir],
+body.pwat-blur-messages [data-id] [data-plain-text],
+body.pwat-blur-messages .pwat-deleted-text,
+body.pwat-blur-messages [data-testid="msg-container"] span.selectable-text,
+body.pwat-blur-messages [data-testid="msg-container"] .selectable-text,
+body.pwat-blur-messages [data-testid="msg-container"] span[dir],
+body.pwat-blur-messages [data-testid="msg-container"] div[dir],
+body.pwat-blur-messages [data-testid="msg-container"] [data-plain-text] {
+  filter: blur(5px);
+  transition: filter 120ms ease;
+}
+
+body.pwat-blur-messages [data-id]:hover span.selectable-text,
+body.pwat-blur-messages [data-id]:hover .selectable-text,
+body.pwat-blur-messages [data-id]:hover span[dir],
+body.pwat-blur-messages [data-id]:hover div[dir],
+body.pwat-blur-messages [data-id]:hover [data-plain-text],
+body.pwat-blur-messages [data-id]:hover .pwat-deleted-text,
+body.pwat-blur-messages [data-testid="msg-container"]:hover span.selectable-text,
+body.pwat-blur-messages [data-testid="msg-container"]:hover .selectable-text,
+body.pwat-blur-messages [data-testid="msg-container"]:hover span[dir],
+body.pwat-blur-messages [data-testid="msg-container"]:hover div[dir],
+body.pwat-blur-messages [data-testid="msg-container"]:hover [data-plain-text] {
+  filter: none;
+}
+
+/* Hide the interactive control, never an arbitrary parent or a message link.
+   Icons may be nested several spans deep inside WhatsApp's buttons. */
+body.pwat-hide-status :is(button, [role="button"], [role="tab"], nav a):is(
+  [aria-label="Status"], [title="Status"], [aria-label="Updates"],
+  [aria-label="Updates in Status"], [title="Updates"],
+  [data-testid="status"], [data-testid="status-tab"], [data-tab="status"],
+  :has([data-icon="status-outline"], [data-icon="status-v3-unread"], [data-icon="status-v3"], [data-icon="status"], [aria-label="Status"], [title="Status"])
+),
+body.pwat-hide-channels :is(button, [role="button"], [role="tab"], nav a):is(
+  [aria-label="Channels"], [title="Channels"],
+  :has([data-icon="newsletter-outline"], [data-icon="newsletter"], [aria-label="Channels"], [title="Channels"])
+),
+body.pwat-hide-communities :is(button, [role="button"], [role="tab"], nav a):is(
+  [aria-label="Communities"], [title="Communities"],
+  :has([data-icon="community-outline"], [data-icon="community"], [aria-label="Communities"], [title="Communities"])
+),
+body.pwat-hide-meta-ai :is(button, [role="button"], [role="tab"], nav a):is(
+  [aria-label="Meta AI"], [title="Meta AI"], [aria-label="Ask Meta AI"], [title="Ask Meta AI"],
+  :has([data-icon="meta-ai"], [data-icon="ai"], [aria-label="Meta AI"], [title="Meta AI"])
+),
+body.pwat-hide-emojis :is(button, [role="button"], [role="tab"]):is(
+  [aria-label="Emoji"], [aria-label="Emojis"], [title="Emoji"], [title="Emojis"],
+  :has([data-icon="smiley"], [data-icon="emoji-input"])
+):not([aria-label="Emojis, GIFs, Stickers"]),
+body.pwat-hide-gifs :is(button, [role="button"], [role="tab"]):is(
+  [aria-label="GIF"], [aria-label="GIFs"], [title="GIF"], [title="GIFs"], [data-testid="gif-button"],
+  :has([data-icon="gif"], [data-testid="gif-button"])
+):not([aria-label="Emojis, GIFs, Stickers"]),
+body.pwat-hide-stickers :is(button, [role="button"], [role="tab"]):is(
+  [aria-label="Sticker"], [aria-label="Stickers"], [title="Sticker"], [title="Stickers"], [data-testid="sticker-button"],
+  :has([data-icon="sticker"], [data-testid="sticker-button"])
+):not([aria-label="Emojis, GIFs, Stickers"]),
+body.pwat-hide-emojis.pwat-hide-gifs.pwat-hide-stickers :is(button, [role="button"])[aria-label="Emojis, GIFs, Stickers"] {
+  display: none !important;
+}
+
+/* WhatsApp draws the unread badge as a sibling of the nav button, not inside
+   it, so hiding the control alone left an orphan green dot in the rail.
+   Collapse the item wrapper too. Three guards stop this repeating the old
+   regression where a bare :has(> button) hid whole containers: the subject
+   must sit inside the nav rail, it may be at most three levels above the
+   control, and it must actually contain a badge. The last guard is what
+   keeps a chat-list header row that holds a labelled control plus the search
+   box from ever matching. Anchored on labels only: nesting :has() inside
+   :is() is valid CSS but the test DOM cannot parse it, and every rail
+   control carries an aria-label. */
+body.pwat-hide-status :is([data-testid="navbar-primary-section"], header) :is(
+  :has(> :is(button, [role="button"], [role="tab"], nav a):is([aria-label="Status"], [title="Status"], [aria-label="Updates"], [aria-label="Updates in Status"], [title="Updates"])):has(:is([role="status"], [data-icon="unread-count"], [data-testid="icon-unread-count"])),
+  :has(> * > :is(button, [role="button"], [role="tab"], nav a):is([aria-label="Status"], [title="Status"], [aria-label="Updates"], [aria-label="Updates in Status"], [title="Updates"])):has(:is([role="status"], [data-icon="unread-count"], [data-testid="icon-unread-count"])),
+  :has(> * > * > :is(button, [role="button"], [role="tab"], nav a):is([aria-label="Status"], [title="Status"], [aria-label="Updates"], [aria-label="Updates in Status"], [title="Updates"])):has(:is([role="status"], [data-icon="unread-count"], [data-testid="icon-unread-count"]))
+),
+body.pwat-hide-channels :is([data-testid="navbar-primary-section"], header) :is(
+  :has(> :is(button, [role="button"], [role="tab"], nav a):is([aria-label="Channels"], [title="Channels"])):has(:is([role="status"], [data-icon="unread-count"], [data-testid="icon-unread-count"])),
+  :has(> * > :is(button, [role="button"], [role="tab"], nav a):is([aria-label="Channels"], [title="Channels"])):has(:is([role="status"], [data-icon="unread-count"], [data-testid="icon-unread-count"])),
+  :has(> * > * > :is(button, [role="button"], [role="tab"], nav a):is([aria-label="Channels"], [title="Channels"])):has(:is([role="status"], [data-icon="unread-count"], [data-testid="icon-unread-count"]))
+),
+body.pwat-hide-communities :is([data-testid="navbar-primary-section"], header) :is(
+  :has(> :is(button, [role="button"], [role="tab"], nav a):is([aria-label="Communities"], [title="Communities"])):has(:is([role="status"], [data-icon="unread-count"], [data-testid="icon-unread-count"])),
+  :has(> * > :is(button, [role="button"], [role="tab"], nav a):is([aria-label="Communities"], [title="Communities"])):has(:is([role="status"], [data-icon="unread-count"], [data-testid="icon-unread-count"])),
+  :has(> * > * > :is(button, [role="button"], [role="tab"], nav a):is([aria-label="Communities"], [title="Communities"])):has(:is([role="status"], [data-icon="unread-count"], [data-testid="icon-unread-count"]))
+),
+body.pwat-hide-meta-ai :is([data-testid="navbar-primary-section"], header) :is(
+  :has(> :is(button, [role="button"], [role="tab"], nav a):is([aria-label="Meta AI"], [title="Meta AI"], [aria-label="Ask Meta AI"], [title="Ask Meta AI"])):has(:is([role="status"], [data-icon="unread-count"], [data-testid="icon-unread-count"])),
+  :has(> * > :is(button, [role="button"], [role="tab"], nav a):is([aria-label="Meta AI"], [title="Meta AI"], [aria-label="Ask Meta AI"], [title="Ask Meta AI"])):has(:is([role="status"], [data-icon="unread-count"], [data-testid="icon-unread-count"])),
+  :has(> * > * > :is(button, [role="button"], [role="tab"], nav a):is([aria-label="Meta AI"], [title="Meta AI"], [aria-label="Ask Meta AI"], [title="Ask Meta AI"])):has(:is([role="status"], [data-icon="unread-count"], [data-testid="icon-unread-count"]))
+) {
+  display: none !important;
+}
+
+.pwat-chat-row-host.pwat-pinned::before {
+  background: #00a884;
+  border-radius: 2px;
+  bottom: 8px;
+  content: "";
+  left: 0;
+  position: absolute;
+  top: 8px;
+  width: 3px;
+  z-index: 2;
+}

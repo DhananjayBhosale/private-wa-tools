@@ -1,0 +1,34 @@
+name: Bug report
+description: Something in the extension does not work as expected
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Do not paste real messages, names, phone numbers, or screenshots of real chats. Use a test chat and redact anything personal.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what you saw.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Extension version
+      description: Shown on the extension card at chrome://extensions.
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and operating system
+      placeholder: Chrome 140 on macOS 26
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: Steps to reproduce, or console errors with anything personal removed.
